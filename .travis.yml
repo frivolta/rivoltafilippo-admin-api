@@ -1,0 +1,26 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t frivolta/rf-api --target development . --no-cache
+
+script:
+  - docker run frivolta/rf-api npm run test
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push frivolta/rf-api
+
+deploy:
+  provider: elasticbeanstalk
+  region: eu-west-2
+  app: rf-api
+  env: Rfapi-env
+  bucket_name: elasticbeanstalk-eu-west-2-330238565282
+  bucket_path: rf-api
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
