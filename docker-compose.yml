@@ -2,13 +2,12 @@ version: '3.8'
 
 services:
   dev:
-    container_name: nestjs_api_dev
-    image: nestjs-api-dev:1.0.0
+    container_name: nest
     build:
       context: .
       target: development
       dockerfile: ./Dockerfile
-    command: npm run start:debug
+    command: npm run start:dev
     depends_on:
       - db
     env_file:
@@ -20,18 +19,19 @@ services:
       - nesjs-network
     volumes:
       - .:/usr/src/app
-      #- /usr/src/app/node_modules
+      - /usr/src/app/node_modules
+
     restart: unless-stopped
 
   db:
     image: postgres
-    container_name: nest_db
+    container_name: nest-db
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=pg
-      - POSTGRES_USER=pg
-      - POSTGRES_PASSWORD=pg
+      - POSTGRES_DB=pgfour
+      - POSTGRES_USER=pgtwo
+      - POSTGRES_PASSWORD=pgtwo
     networks:
       - nesjs-network
 

@@ -1,6 +1,6 @@
 {
     "type": "postgres",
-    "host": "nest_db",
+    "host": "nest-db",
     "port": 5432,
     "username": "pg",
     "password": "pg",

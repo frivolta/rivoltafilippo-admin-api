@@ -1,0 +1,6 @@
+FROM node:12.19.0-alpine3.9
+COPY ./entrypoint.sh /
+RUN set -ex && \
+    apk add --no-cache bash && \
+    chmod +x /entrypoint.sh
+CMD ["/entrypoint.sh"]
