@@ -15,7 +15,7 @@ async function bootstrap() {
       disableErrorMessages: false,
     }),
   );
-
+  console.log('process: ', process.env.PORT);
   await app.listen(process.env.PORT || 80);
 }
 bootstrap();
