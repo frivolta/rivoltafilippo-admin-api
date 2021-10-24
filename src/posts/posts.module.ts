@@ -9,9 +9,9 @@ import { AuthenticationMiddleware } from 'src/common/authentication.middleware';
   controllers: [PostsController],
 })
 export class PostsModule {
-  configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
+  /*  configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
     consumer
       .apply(AuthenticationMiddleware)
       .forRoutes({ method: RequestMethod.ALL, path: '*' });
-  }
+  } */
 }

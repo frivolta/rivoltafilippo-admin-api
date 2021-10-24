@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { AuthenticationMiddleware } from './common/authentication.middleware';
 import { PostsModule } from './posts/posts.module';
 import { ConfigModule } from './config/config.module';
+import { AuthModule } from './auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -25,14 +27,10 @@ import { ConfigModule } from './config/config.module';
     }),
     PostsModule,
     ConfigModule,
+    AuthModule,
+    PassportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
-    consumer
-      .apply(AuthenticationMiddleware)
-      .forRoutes({ method: RequestMethod.ALL, path: '/' });
-  }
-}
+export class AppModule {}
