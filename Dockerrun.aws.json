@@ -1,0 +1,13 @@
+{
+    "AWSEBDockerrunVersion": "1",
+    "Image": {
+        "Name": "frivolta/rivoltafilippo-admin-api"
+    },
+    "Ports": [
+        {
+            "ContainerPort": 3001,
+            "HostPort": 3001
+        }
+    ],
+    "Logging": "/usr/local/glassfish5/glassfish/domains/domain1/logs"
+}
