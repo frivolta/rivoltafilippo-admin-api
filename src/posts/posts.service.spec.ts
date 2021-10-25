@@ -1,6 +1,6 @@
+import { HttpException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Console } from 'console';
 import { Repository } from 'typeorm';
 import { CreatePostInput } from './dto/create-post.dto';
 import { Post } from './entities/post.entity';
@@ -72,9 +72,21 @@ describe('PostService', () => {
 
     it('should fail if slug already exists', async () => {
       postRepository.findOne.mockResolvedValue(MOCKED_ENTITY_VALUES);
-      const result = await service.createPost(MOCKED_ENTITY_INPUT);
+      try {
+        await service.createPost(MOCKED_ENTITY_INPUT);
+      } catch (err) {
+        expect(err.getResponse().response).toEqual('Slug already exists');
+        expect(err).toBeInstanceOf(HttpException);
+      }
+    });
 
-      expect(postRepository.create).not.toHaveBeenCalled();
+    it('should fail if slug already exists', async () => {
+      postRepository.save.mockRejectedValue(new Error('Async error'));
+      try {
+        await service.createPost(MOCKED_ENTITY_INPUT);
+      } catch (err) {
+        expect(err).toBeInstanceOf(HttpException);
+      }
     });
   });
 });
