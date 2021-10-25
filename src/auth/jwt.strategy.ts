@@ -1,7 +1,7 @@
 import { passportJwtSecret } from 'jwks-rsa';
 import { ExtractJwt, Strategy, VerifiedCallback } from 'passport-jwt';
 
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 
 @Injectable()
@@ -23,7 +23,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   validate(payload: any, done: VerifiedCallback) {
-    console.log(payload);
     if (!payload) {
       done(new UnauthorizedException(), false);
     }

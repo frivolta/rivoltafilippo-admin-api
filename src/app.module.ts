@@ -2,9 +2,8 @@ import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthenticationMiddleware } from './common/authentication.middleware';
+
 import { PostsModule } from './posts/posts.module';
-import { ConfigModule } from './config/config.module';
 import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
 
@@ -26,7 +25,6 @@ import { PassportModule } from '@nestjs/passport';
       },
     }),
     PostsModule,
-    ConfigModule,
     AuthModule,
     PassportModule,
   ],
