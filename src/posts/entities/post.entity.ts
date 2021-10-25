@@ -1,4 +1,10 @@
-import { IsBoolean, IsDate, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsDateString,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { CommonEntity } from 'src/common/entities/common';
 import { Entity, Column } from 'typeorm';
 
@@ -26,7 +32,7 @@ export class Post extends CommonEntity {
   @Column({ nullable: true })
   redditUrl: string;
 
-  @IsDate()
+  @IsDateString()
   @Column()
   publishedAt: Date;
 
@@ -36,6 +42,7 @@ export class Post extends CommonEntity {
   img: string;
 
   @IsBoolean()
-  @Column({ default: true })
+  @IsOptional()
+  @Column({ default: true, nullable: true })
   isDraft: boolean;
 }
