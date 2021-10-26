@@ -5,8 +5,8 @@
     },
     "Ports": [
         {
-            "ContainerPort": 3001,
-            "HostPort": 3001
+            "ContainerPort": 8080,
+            "HostPort": 8080
         }
     ],
     "Logging": "/usr/local/glassfish5/glassfish/domains/domain1/logs"

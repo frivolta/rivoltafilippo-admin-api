@@ -13,7 +13,7 @@ services:
     env_file:
       - .env
     ports:
-      - 3001:3001
+      - 8080:8080
       - 9229:9229
     networks:
       - nesjs-network

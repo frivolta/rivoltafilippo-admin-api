@@ -13,6 +13,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   console.log('process: ', process.env.PORT);
   console.log('env: ', process.env.NODE_ENV);
-  await app.listen(process.env.PORT || 80);
+  await app.listen(process.env.PORT || 8080);
 }
 bootstrap();
