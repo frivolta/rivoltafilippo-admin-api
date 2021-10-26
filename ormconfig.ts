@@ -2,10 +2,10 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 
 const config: PostgresConnectionOptions = {
   type: 'postgres',
-  host: 'nest-db',
-  database: 'pgfour',
-  username: 'pgtwo',
-  password: 'pgtwo',
+  host: 'postgres.ckztgkjihhx9.eu-west-2.rds.amazonaws.com',
+  database: 'postgres',
+  username: 'postgres',
+  password: 'postgres',
   port: 5432,
   synchronize: false,
   entities: ['dist/src/**/*.entity.js'],

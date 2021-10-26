@@ -1,7 +1,7 @@
 {
     "AWSEBDockerrunVersion": "1",
     "Image": {
-        "Name": "frivolta/rivoltafilippo-admin-api"
+        "Name": "frivolta/rivoltafilippo-admin-api-two"
     },
     "Ports": [
         {
