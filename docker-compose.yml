@@ -11,15 +11,15 @@ services:
     depends_on:
       - db
     env_file:
-      - .env
+      - .env.dev
     ports:
-      - 8080:8080
+      - 3000:3000
       - 9229:9229
     networks:
       - nesjs-network
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      #- /usr/src/app/node_modules
 
     restart: unless-stopped
 

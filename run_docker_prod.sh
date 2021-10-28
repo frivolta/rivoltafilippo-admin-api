@@ -1,2 +1,1 @@
-#!/bin/bash
-docker run -p 8080:8080 frivolta/rivoltafilippo-admin-api --env-file .env
+docker run -p 3000:3000 --env-file .env frivolta/rivoltafilippo-admin-api-two
