@@ -26,5 +26,4 @@ RUN npm install
 COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
-RUN ls -l
 CMD ["node", "dist/src/main"]
