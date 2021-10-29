@@ -16,6 +16,11 @@ import { PostService } from './posts.service';
 import { GetAllPostsDto } from './dto/get-all-posts.dto';
 import { GetPublicPostsDto } from './dto/get-public-posts.dto';
 import { DeletePostInputDto, DeletePostOutputDto } from './dto/delete-post.dto';
+import {
+  GetPublicPostInputDto,
+  GetPublicPostOutputDto,
+} from './dto/get-all-post.dto';
+import { UpdatePostInputDto, UpdatePostOutputDto } from './dto/update-post.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -39,14 +44,20 @@ export class PostsController {
   }
 
   @Get('/public/:id')
-  getPublicPost(@Req() request: Request): string {
-    return 'get public post';
+  getPublicPost(
+    @Param() params: GetPublicPostInputDto,
+    @Req() request: Request,
+  ): Promise<GetPublicPostOutputDto> {
+    return this.postService.getPublicPost(params);
   }
 
   @Patch('/:id')
   @UseGuards(AuthGuard('jwt'))
-  updatePost(@Req() request: Request): string {
-    return 'get public post';
+  updatePost(
+    @Param() params: string,
+    @Req() request: UpdatePostInputDto,
+  ): Promise<UpdatePostOutputDto> {
+    return this.postService.updatePost(params, request);
   }
 
   @Delete('/:id')
