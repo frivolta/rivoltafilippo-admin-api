@@ -10,39 +10,27 @@ import { Entity, Column } from 'typeorm';
 
 @Entity({ name: 'Post' })
 export class Post extends CommonEntity {
-  @IsString()
-  @Column()
+  @Column('varchar')
   title: string;
 
-  @IsString()
-  @Column()
+  @Column('varchar')
   slug: string;
 
-  @IsString()
-  @Column()
+  @Column('varchar')
   content: string;
 
-  @IsString()
-  @IsOptional()
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   mediumUrl: string;
 
-  @IsString()
-  @IsOptional()
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   redditUrl: string;
 
-  @IsDateString()
-  @Column()
+  @Column('date')
   publishedAt: Date;
 
-  @IsString()
-  @IsOptional()
-  @Column()
+  @Column('varchar')
   img: string;
 
-  @IsBoolean()
-  @IsOptional()
-  @Column({ default: true, nullable: true })
+  @Column({ type: 'boolean', default: true, nullable: true })
   isDraft: boolean;
 }

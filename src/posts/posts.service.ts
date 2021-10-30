@@ -9,8 +9,9 @@ import { DeletePostInputDto, DeletePostOutputDto } from './dto/delete-post.dto';
 import {
   GetPublicPostInputDto,
   GetPublicPostOutputDto,
-} from './dto/get-all-post.dto';
+} from './dto/get-public-post.dto';
 import { UpdatePostInputDto, UpdatePostOutputDto } from './dto/update-post.dto';
+import { GetPostInputDto, GetPostOutputDto } from './dto/get-post.dto';
 
 @Injectable()
 export class PostService {
@@ -73,17 +74,35 @@ export class PostService {
     }
   }
 
+  async getPost(
+    getPublicPostInput: GetPostInputDto,
+  ): Promise<GetPostOutputDto> {
+    try {
+      const post = await this.posts.findOne(getPublicPostInput.id);
+      if (!post) {
+        throw new HttpException(
+          'Post not found or not public',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      return { post };
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async updatePost(
     postId: string,
     updatePostInput: UpdatePostInputDto,
   ): Promise<UpdatePostOutputDto> {
     try {
-      console.log('postId', postId);
       const post = await this.posts.findOne(postId);
       if (!post) {
         throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
       }
-      return { post };
+      await this.posts.update(post.id, updatePostInput);
+      const updated = await this.posts.findOne(post.id);
+      return updated;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }
