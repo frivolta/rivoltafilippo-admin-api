@@ -37,7 +37,7 @@ export class PostsController {
   // Get Posts
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  getAllPosts(@Req() request: Request): Promise<GetAllPostsDto> {
+  getAllPosts(): Promise<GetAllPostsDto> {
     return this.postService.getAllPosts();
   }
 
@@ -62,7 +62,6 @@ export class PostsController {
   @UseGuards(AuthGuard('jwt'))
   deletePost(
     @Param() params: DeletePostInputDto,
-    @Req() request: Request,
   ): Promise<DeletePostOutputDto> {
     return this.postService.deletePostDto(params);
   }
