@@ -50,6 +50,7 @@ export class PostService {
 
   async getPublicPosts(): Promise<GetPublicPostsDto> {
     try {
+      console.log('getting posts');
       const posts = await this.posts.find({ where: { isDraft: false } });
       return { posts };
     } catch (err) {

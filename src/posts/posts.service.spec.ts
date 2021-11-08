@@ -21,7 +21,7 @@ const MOCKED_ENTITY_VALUES: Post = {
   content: 'Lorem ipsum content',
   mediumUrl: 'http://www.rivoltafilippo.com',
   redditUrl: 'http://www.rivoltafilippo.com',
-  publishedAt: new Date(),
+  publishedAt: new Date().toString(),
   img: 'http://www.rivoltafilippo.com/content.jpg',
   isDraft: false,
   createdAt: new Date(),
@@ -35,7 +35,7 @@ const MOCKED_ENTITY_INPUT: CreatePostInput = {
   content: 'Lorem ipsum content',
   mediumUrl: 'http://www.rivoltafilippo.com',
   redditUrl: 'http://www.rivoltafilippo.com',
-  publishedAt: new Date(),
+  publishedAt: new Date().toString(),
   img: 'http://www.rivoltafilippo.com/content.jpg',
   isDraft: false,
 };

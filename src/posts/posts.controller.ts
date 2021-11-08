@@ -10,7 +10,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
 import { CreatePostInput, CreatePostOutput } from './dto/create-post.dto';
 import { PostService } from './posts.service';
 import { GetAllPostsDto } from './dto/get-all-posts.dto';
@@ -21,7 +20,7 @@ import {
   GetPublicPostOutputDto,
 } from './dto/get-public-post.dto';
 import { UpdatePostInputDto, UpdatePostOutputDto } from './dto/update-post.dto';
-import { GetPostInputDto } from './dto/get-post.dto';
+import { GetPostInputDto, GetPostOutputDto } from './dto/get-post.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -43,7 +42,7 @@ export class PostsController {
 
   @Get('/:id')
   @UseGuards(AuthGuard('jwt'))
-  getPost(@Param() params: GetPostInputDto): Promise<GetPublicPostOutputDto> {
+  getPost(@Param() params: GetPostInputDto): Promise<GetPostOutputDto> {
     return this.postService.getPost(params);
   }
 
@@ -67,8 +66,8 @@ export class PostsController {
   }
 
   // Public - Get Posts
-  @Get('/public')
-  getPublicPosts(@Req() request: Request): Promise<GetPublicPostsDto> {
+  @Get('/public/all')
+  getPublicPosts(): Promise<GetPublicPostsDto> {
     return this.postService.getPublicPosts();
   }
 
