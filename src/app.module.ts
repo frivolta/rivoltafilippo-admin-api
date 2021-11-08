@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
+import { AuthorModule } from './author/author.module';
 import * as Joi from 'joi';
 import * as fs from 'fs';
 
@@ -54,6 +55,7 @@ import * as fs from 'fs';
     PostsModule,
     AuthModule,
     PassportModule,
+    AuthorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

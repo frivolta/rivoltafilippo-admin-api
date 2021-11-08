@@ -2,12 +2,14 @@ import {
   IsBoolean,
   IsDate,
   IsDateString,
+  IsNotEmpty,
   isNotEmpty,
   IsOptional,
   IsString,
 } from 'class-validator';
 import { CommonEntity } from 'src/common/entities/common';
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
+import { Author } from '../../author/entities/author.entity';
 
 @Entity({ name: 'Post' })
 export class Post extends CommonEntity {
@@ -42,4 +44,8 @@ export class Post extends CommonEntity {
   @IsBoolean()
   @Column({ type: 'boolean', default: true, nullable: true })
   isDraft: boolean;
+
+  @IsNotEmpty()
+  @ManyToOne(() => Author, (author: Author) => author.posts)
+  author: Author;
 }
