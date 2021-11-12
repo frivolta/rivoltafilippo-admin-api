@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CreatePostInput } from './dto/create-post.dto';
+import { MOCKED_POST, MOCKED_POST_ENTITY } from 'src/fixtures/post';
 
 const mockRepository = () => ({
   findOne: jest.fn(),
@@ -17,32 +17,8 @@ const mockRepository = () => ({
 });
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 
-const MOCKED_POST: CreatePostInput = {
-  title: 'Lorem ipsum title',
-  slug: 'lorem-ipsum-title-2',
-  content: 'Lorem ipsum content',
-  mediumUrl: 'http://www.rivoltafilippo.com',
-  redditUrl: 'http://www.rivoltafilippo.com',
-  publishedAt: new Date().toString(),
-  img: 'http://www.rivoltafilippo.com/content.jpg',
-  isDraft: false,
-};
-
-const MOCKED_ENTITY_VALUES: Post = {
-  title: 'Lorem ipsum title',
-  slug: 'lorem-ipsum-title-2',
-  content: 'Lorem ipsum content',
-  mediumUrl: 'http://www.rivoltafilippo.com',
-  redditUrl: 'http://www.rivoltafilippo.com',
-  publishedAt: new Date().toString(),
-  img: 'http://www.rivoltafilippo.com/content.jpg',
-  isDraft: false,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  id: 1,
-};
 const EDITED_ENTITY_VALUES: Post = {
-  ...MOCKED_ENTITY_VALUES,
+  ...MOCKED_POST_ENTITY,
   title: 'new title',
 };
 
@@ -76,7 +52,7 @@ describe('PostController', () => {
   describe('Controller', () => {
     it('should create a post', async function () {
       const result = await postController.create(MOCKED_POST);
-      postRepository.create.mockResolvedValueOnce(MOCKED_ENTITY_VALUES);
+      postRepository.create.mockResolvedValueOnce(MOCKED_POST_ENTITY);
       expect(postRepository.create).toHaveBeenCalledTimes(1);
       expect(result).toHaveProperty('post');
     });
@@ -84,8 +60,8 @@ describe('PostController', () => {
     it('should get all posts', async () => {
       const result = await postController.getAllPosts();
       postRepository.find.mockResolvedValueOnce([
-        MOCKED_ENTITY_VALUES,
-        MOCKED_ENTITY_VALUES,
+        MOCKED_POST_ENTITY,
+        MOCKED_POST_ENTITY,
       ]);
       expect(result).toHaveProperty('posts');
       expect(postRepository.find).toHaveBeenCalledTimes(1);
@@ -94,7 +70,7 @@ describe('PostController', () => {
     it('should get a post', async () => {
       jest
         .spyOn(postRepository, 'findOne')
-        .mockReturnValue(Promise.resolve(MOCKED_ENTITY_VALUES));
+        .mockReturnValue(Promise.resolve(MOCKED_POST_ENTITY));
       const result = await postController.getPost({ id: 1 });
       expect(result).toHaveProperty('post');
       expect(postRepository.findOne).toHaveBeenCalledTimes(1);
@@ -102,7 +78,7 @@ describe('PostController', () => {
     it('edit a post', async () => {
       jest
         .spyOn(postRepository, 'findOne')
-        .mockReturnValueOnce(Promise.resolve(MOCKED_ENTITY_VALUES));
+        .mockReturnValueOnce(Promise.resolve(MOCKED_POST_ENTITY));
       jest
         .spyOn(postRepository, 'update')
         .mockReturnValue(Promise.resolve(EDITED_ENTITY_VALUES));
@@ -114,7 +90,7 @@ describe('PostController', () => {
     it('should delete a post', async () => {
       jest
         .spyOn(postRepository, 'findOne')
-        .mockReturnValueOnce(Promise.resolve(MOCKED_ENTITY_VALUES));
+        .mockReturnValueOnce(Promise.resolve(MOCKED_POST_ENTITY));
       jest
         .spyOn(postRepository, 'delete')
         .mockReturnValue(Promise.resolve({ ok: true }));
@@ -124,7 +100,7 @@ describe('PostController', () => {
     it('should get a public post', async () => {
       jest
         .spyOn(postRepository, 'findOne')
-        .mockReturnValue(Promise.resolve(MOCKED_ENTITY_VALUES));
+        .mockReturnValue(Promise.resolve(MOCKED_POST_ENTITY));
       const result = await postController.getPost({ id: 1 });
       expect(result).toHaveProperty('post');
       expect(postRepository.findOne).toHaveBeenCalledTimes(1);
@@ -132,8 +108,8 @@ describe('PostController', () => {
     it('should get all public posts', async () => {
       const result = await postController.getAllPosts();
       postRepository.find.mockResolvedValueOnce([
-        MOCKED_ENTITY_VALUES,
-        MOCKED_ENTITY_VALUES,
+        MOCKED_POST_ENTITY,
+        MOCKED_POST_ENTITY,
       ]);
       expect(result).toHaveProperty('posts');
       expect(postRepository.find).toHaveBeenCalledTimes(1);

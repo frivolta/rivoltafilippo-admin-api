@@ -1,6 +1,10 @@
 import { HttpException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import {
+  mockedAuthorGenerator,
+  MOCKED_AUTHOR_ENTITY,
+} from 'src/fixtures/author';
 import { Repository } from 'typeorm';
 import { CreatePostInput } from './dto/create-post.dto';
 import { Post } from './entities/post.entity';
@@ -27,6 +31,7 @@ const MOCKED_ENTITY_VALUES: Post = {
   createdAt: new Date(),
   updatedAt: new Date(),
   id: 1,
+  author: MOCKED_AUTHOR_ENTITY,
 };
 
 const MOCKED_ENTITY_INPUT: CreatePostInput = {
@@ -38,6 +43,7 @@ const MOCKED_ENTITY_INPUT: CreatePostInput = {
   publishedAt: new Date().toString(),
   img: 'http://www.rivoltafilippo.com/content.jpg',
   isDraft: false,
+  author: MOCKED_AUTHOR_ENTITY,
 };
 
 describe('PostService', () => {
