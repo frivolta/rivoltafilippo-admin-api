@@ -59,5 +59,38 @@ describe('AuthorController', () => {
       const result = await controller.create(mockedAuthorInput);
       expect(result).toMatchObject({ author: mockedAuthorEntity });
     });
+
+    it('should get an author by id', async () => {
+      repository.findOne.mockReturnValue(Promise.resolve(mockedAuthorEntity));
+      const result = await controller.getAuthorById({ id: 1 });
+      expect(result).toMatchObject({ author: mockedAuthorEntity });
+    });
+    it('should get an author by name', async () => {
+      repository.findOne.mockReturnValue(Promise.resolve(mockedAuthorEntity));
+      const result = await controller.getAuthorByName({ name: 'John' });
+      expect(result).toMatchObject({ author: mockedAuthorEntity });
+    });
+    it('should delete an author', async () => {
+      repository.delete.mockReturnValue(Promise.resolve(true));
+      const result = await controller.deleteAuthor({ id: '1' });
+      expect(result).toMatchObject({ ok: true });
+    });
+    it.only('should edit an author', async () => {
+      repository.update.mockReturnValue(
+        Promise.resolve({ ...mockedAuthorEntity, name: 'Edited name' }),
+      );
+      repository.findOne
+        .mockResolvedValueOnce(undefined)
+        .mockResolvedValueOnce({ ...mockedAuthorEntity, name: 'Edited name' });
+      const result = await controller.updateAuthor({
+        id: 1,
+        name: 'Edited name',
+      });
+      expect(repository.findOne).toHaveBeenCalledTimes(2);
+      expect(result).toMatchObject({
+        ...mockedAuthorEntity,
+        name: 'Edited name',
+      });
+    });
   });
 });

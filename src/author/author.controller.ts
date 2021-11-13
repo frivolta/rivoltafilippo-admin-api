@@ -1,7 +1,26 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthorService } from './author.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateAuthorInput, CreateAuthorOutput } from './dto/create-author.dto';
+import { GetAuthorInputDto, GetAuthorOutputDto } from './dto/get-author.dto';
+import { GetAuthorByNameInputDto } from './dto/get-author-by-name.dto';
+import {
+  DeleteAuthorInputDto,
+  DeleteAuthorOutputDto,
+} from './dto/delete-author.dto';
+import {
+  UpdateAuthorInputDto,
+  UpdateAuthorOutputDto,
+} from './dto/update-author.dto';
 
 @Controller('author')
 export class AuthorController {
@@ -16,10 +35,36 @@ export class AuthorController {
   }
 
   // Get authors
+  @Get('/:id')
+  getAuthorById(
+    @Param() getAuthorInput: GetAuthorInputDto,
+  ): Promise<GetAuthorOutputDto> {
+    return this.authorService.getAuthorById(getAuthorInput);
+  }
 
   // Get author
+  @Get('/:name')
+  getAuthorByName(
+    @Param() getAuthorInput: GetAuthorByNameInputDto,
+  ): Promise<GetAuthorOutputDto> {
+    return this.authorService.getAuthorByName(getAuthorInput);
+  }
 
   // Delete author
+  @Delete('/:id')
+  @UseGuards(AuthGuard('jwt'))
+  deleteAuthor(
+    @Param('id') deleteAuthorInput: DeleteAuthorInputDto,
+  ): Promise<DeleteAuthorOutputDto> {
+    return this.authorService.deleteAuthor(deleteAuthorInput);
+  }
 
-  // Edit author
+  // Update author
+  @Put('/')
+  @UseGuards(AuthGuard('jwt'))
+  updateAuthor(
+    @Body() updateAuthorInput: UpdateAuthorInputDto,
+  ): Promise<UpdateAuthorOutputDto> {
+    return this.authorService.updateAuthor(updateAuthorInput);
+  }
 }
