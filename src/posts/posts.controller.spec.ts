@@ -114,5 +114,13 @@ describe('PostController', () => {
       expect(result).toHaveProperty('posts');
       expect(postRepository.find).toHaveBeenCalledTimes(1);
     });
+    it('should get a public post by slug', async () => {
+      jest
+        .spyOn(postRepository, 'findOne')
+        .mockReturnValue(Promise.resolve(MOCKED_POST_ENTITY));
+      const result = await postController.getPublicPostBySlug({ slug: 'slug' });
+      expect(result).toHaveProperty('post');
+      expect(postRepository.findOne).toHaveBeenCalledTimes(1);
+    });
   });
 });

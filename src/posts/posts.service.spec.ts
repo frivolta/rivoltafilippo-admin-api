@@ -1,10 +1,7 @@
 import { HttpException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import {
-  mockedAuthorGenerator,
-  MOCKED_AUTHOR_ENTITY,
-} from 'src/fixtures/author';
+import { MOCKED_AUTHOR_ENTITY } from 'src/fixtures/author';
 import { Repository } from 'typeorm';
 import { CreatePostInput } from './dto/create-post.dto';
 import { Post } from './entities/post.entity';
@@ -23,6 +20,7 @@ const MOCKED_ENTITY_VALUES: Post = {
   title: 'Lorem ipsum title',
   slug: 'lorem-ipsum-title-2',
   content: 'Lorem ipsum content',
+  excerpt: 'excerpt',
   mediumUrl: 'http://www.rivoltafilippo.com',
   redditUrl: 'http://www.rivoltafilippo.com',
   publishedAt: new Date().toString(),
@@ -38,6 +36,7 @@ const MOCKED_ENTITY_INPUT: CreatePostInput = {
   title: 'Lorem ipsum title',
   slug: 'lorem-ipsum-title-2',
   content: 'Lorem ipsum content',
+  excerpt: 'excerpt',
   mediumUrl: 'http://www.rivoltafilippo.com',
   redditUrl: 'http://www.rivoltafilippo.com',
   publishedAt: new Date().toString(),

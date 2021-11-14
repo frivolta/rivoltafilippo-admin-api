@@ -47,11 +47,16 @@ export class AuthorService {
   ): Promise<GetAuthorOutputDto> {
     try {
       const { id } = getAuthorInput;
-      const author = await this.author.findOne({ id });
+      const author = await this.author.findOne(
+        { id },
+        { relations: ['posts'] },
+      );
       if (!author) {
         throw new HttpException('Author not found', HttpStatus.NOT_FOUND);
       }
-      return { author };
+      return {
+        author: { ...author, posts: author.posts.filter((p) => !p.isDraft) },
+      };
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }
@@ -63,11 +68,16 @@ export class AuthorService {
   ): Promise<GetAuthorOutputDto> {
     try {
       const { name } = getAuthorInput;
-      const author = await this.author.findOne({ name });
+      const author = await this.author.findOne(
+        { name: name },
+        { relations: ['posts'] },
+      );
       if (!author) {
         throw new HttpException('Author not found', HttpStatus.NOT_FOUND);
       }
-      return { author };
+      return {
+        author: { ...author, posts: author.posts.filter((p) => !p.isDraft) },
+      };
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }

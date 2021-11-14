@@ -43,7 +43,7 @@ export class AuthorController {
   }
 
   // Get author
-  @Get('/:name')
+  @Get('/find/by-name/:name')
   getAuthorByName(
     @Param() getAuthorInput: GetAuthorByNameInputDto,
   ): Promise<GetAuthorOutputDto> {

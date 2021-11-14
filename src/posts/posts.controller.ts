@@ -21,6 +21,10 @@ import {
 } from './dto/get-public-post.dto';
 import { UpdatePostInputDto, UpdatePostOutputDto } from './dto/update-post.dto';
 import { GetPostInputDto, GetPostOutputDto } from './dto/get-post.dto';
+import {
+  GetPostInputBySlugDto,
+  GetPostOutputBySlugDto,
+} from './dto/get-post-by-slug.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -40,10 +44,17 @@ export class PostsController {
     return this.postService.getAllPosts();
   }
 
-  @Get('/:id')
+  @Get('/id/:id')
   @UseGuards(AuthGuard('jwt'))
   getPost(@Param() params: GetPostInputDto): Promise<GetPostOutputDto> {
     return this.postService.getPost(params);
+  }
+
+  @Get('/slug/:slug')
+  getPublicPostBySlug(
+    @Param() getPostInputBySlugDto: GetPostInputBySlugDto,
+  ): Promise<GetPostOutputBySlugDto> {
+    return this.postService.getPostBySlug(getPostInputBySlugDto);
   }
 
   // Edit Post

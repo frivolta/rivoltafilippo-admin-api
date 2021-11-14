@@ -5,6 +5,7 @@ import { MOCKED_AUTHOR_ENTITY } from './author';
 export const MOCKED_POST: CreatePostInput = {
   title: 'Lorem ipsum title',
   slug: 'lorem-ipsum-title-2',
+  excerpt: 'excerpt',
   content: 'Lorem ipsum content',
   mediumUrl: 'http://www.rivoltafilippo.com',
   redditUrl: 'http://www.rivoltafilippo.com',
@@ -17,6 +18,7 @@ export const MOCKED_POST: CreatePostInput = {
 export const MOCKED_POST_ENTITY: Post = {
   title: 'Lorem ipsum title',
   slug: 'lorem-ipsum-title-2',
+  excerpt: 'excerpt',
   content: 'Lorem ipsum content',
   mediumUrl: 'http://www.rivoltafilippo.com',
   redditUrl: 'http://www.rivoltafilippo.com',

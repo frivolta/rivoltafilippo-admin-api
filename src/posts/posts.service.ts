@@ -12,6 +12,10 @@ import {
 } from './dto/get-public-post.dto';
 import { UpdatePostInputDto, UpdatePostOutputDto } from './dto/update-post.dto';
 import { GetPostInputDto, GetPostOutputDto } from './dto/get-post.dto';
+import {
+  GetPostInputBySlugDto,
+  GetPostOutputBySlugDto,
+} from './dto/get-post-by-slug.dto';
 
 @Injectable()
 export class PostService {
@@ -80,6 +84,25 @@ export class PostService {
   ): Promise<GetPostOutputDto> {
     try {
       const post = await this.posts.findOne(getPublicPostInput.id);
+      if (!post) {
+        throw new HttpException(
+          'Post not found or not public',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      return { post };
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async getPostBySlug(
+    getPostBySlugInput: GetPostInputBySlugDto,
+  ): Promise<GetPostOutputBySlugDto> {
+    try {
+      const post = await this.posts.findOne(getPostBySlugInput.slug, {
+        where: { isDraft: false },
+      });
       if (!post) {
         throw new HttpException(
           'Post not found or not public',

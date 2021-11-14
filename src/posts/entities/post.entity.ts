@@ -26,6 +26,10 @@ export class Post extends CommonEntity {
   content: string;
 
   @IsString()
+  @Column({ type: 'varchar' })
+  excerpt: string;
+
+  @IsString()
   @Column({ type: 'varchar', nullable: true })
   mediumUrl: string;
 
