@@ -38,7 +38,7 @@ export class Post extends CommonEntity {
   redditUrl: string;
 
   @IsString()
-  @Column('date')
+  @Column('varchar')
   publishedAt: string;
 
   @IsString()
