@@ -45,7 +45,9 @@ export class PostService {
 
   async getAllPosts(): Promise<GetAllPostsDto> {
     try {
-      const posts = await this.posts.find();
+      const posts = await this.posts.find({
+        relations: ['author'],
+      });
       return { posts };
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
@@ -54,8 +56,10 @@ export class PostService {
 
   async getPublicPosts(): Promise<GetPublicPostsDto> {
     try {
-      console.log('getting posts');
-      const posts = await this.posts.find({ where: { isDraft: false } });
+      const posts = await this.posts.find({
+        where: { isDraft: false },
+        relations: ['author'],
+      });
       return { posts };
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
@@ -83,7 +87,9 @@ export class PostService {
     getPublicPostInput: GetPostInputDto,
   ): Promise<GetPostOutputDto> {
     try {
-      const post = await this.posts.findOne(getPublicPostInput.id);
+      const post = await this.posts.findOne(getPublicPostInput.id, {
+        relations: ['author'],
+      });
       if (!post) {
         throw new HttpException(
           'Post not found or not public',
@@ -100,9 +106,13 @@ export class PostService {
     getPostBySlugInput: GetPostInputBySlugDto,
   ): Promise<GetPostOutputBySlugDto> {
     try {
-      const post = await this.posts.findOne(getPostBySlugInput.slug, {
-        where: { isDraft: false },
-      });
+      const post = await this.posts.findOne(
+        { slug: getPostBySlugInput.slug },
+        {
+          where: { isDraft: false },
+          relations: ['author'],
+        },
+      );
       if (!post) {
         throw new HttpException(
           'Post not found or not public',
@@ -125,7 +135,9 @@ export class PostService {
         throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
       }
       await this.posts.update(post.id, updatePostInput);
-      const updated = await this.posts.findOne(post.id);
+      const updated = await this.posts.findOne(post.id, {
+        relations: ['author'],
+      });
       return updated;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);

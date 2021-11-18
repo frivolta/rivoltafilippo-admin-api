@@ -13,6 +13,7 @@ import {
   UpdateAuthorInputDto,
   UpdateAuthorOutputDto,
 } from './dto/update-author.dto';
+import { GetAllAuthorsDto } from './dto/get-authors.dto';
 
 @Injectable()
 export class AuthorService {
@@ -36,6 +37,18 @@ export class AuthorService {
       const newAuthor = this.author.create(createAuthorInput);
       await this.author.save(newAuthor);
       return { author: newAuthor };
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async getAllAuthors(): Promise<GetAllAuthorsDto> {
+    try {
+      const authors = await this.author.find();
+      if (!authors) {
+        throw new HttpException('No author found', HttpStatus.NOT_FOUND);
+      }
+      return { authors };
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }

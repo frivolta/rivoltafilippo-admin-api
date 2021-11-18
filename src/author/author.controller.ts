@@ -21,6 +21,7 @@ import {
   UpdateAuthorInputDto,
   UpdateAuthorOutputDto,
 } from './dto/update-author.dto';
+import { GetAllAuthorsDto } from './dto/get-authors.dto';
 
 @Controller('author')
 export class AuthorController {
@@ -40,6 +41,12 @@ export class AuthorController {
     @Param() getAuthorInput: GetAuthorInputDto,
   ): Promise<GetAuthorOutputDto> {
     return this.authorService.getAuthorById(getAuthorInput);
+  }
+
+  // Get authors
+  @Get()
+  getAllAuthors(): Promise<GetAllAuthorsDto> {
+    return this.authorService.getAllAuthors();
   }
 
   // Get author
